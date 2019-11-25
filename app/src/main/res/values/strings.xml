@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">5.1.1.SaveTextFile_getExternalFilesDir</string>
+    <string name="remove">Удалить</string>
+    <string name="Add">Добавить</string>
+    <string name="Save">Сохранить</string>
+    <string name="Name">Наименование товара</string>
+    <string name="Description">Описание товара</string>
+    <string name="Quantity">Количество</string>
+    <string name="Price">Цена</string>
+    <string name="ButtonOK">ОК</string>
+
+</resources>
