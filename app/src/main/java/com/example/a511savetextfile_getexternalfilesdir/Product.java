@@ -3,30 +3,16 @@ package com.example.a511savetextfile_getexternalfilesdir;
 public class Product {
 
     String name;
-    String description;
     int quantity;
     int price;
     int image;
-
-    public Product(String name, String description, int quantity, int price, int image) {
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.price = price;
-        this.image = image;
-    }
+    boolean isChecked;
 
     public Product(int price, int quantity, String name, int image) {
         this.price = price;
         this.quantity = quantity;
         this.name = name;
         this.image = image;
-    }
-
-    public Product(int price, int quantity, String name) {
-        this.price = price;
-        this.quantity = quantity;
-        this.name = name;
     }
 
     public String getName() {
@@ -43,5 +29,13 @@ public class Product {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

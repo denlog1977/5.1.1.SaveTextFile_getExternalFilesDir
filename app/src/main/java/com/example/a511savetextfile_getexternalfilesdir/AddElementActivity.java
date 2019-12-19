@@ -2,6 +2,7 @@ package com.example.a511savetextfile_getexternalfilesdir;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,17 +23,19 @@ public class AddElementActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 TextView editTextName = findViewById(R.id.editTextName);
-                TextView editTextDescriprtion = findViewById(R.id.editTextDescriprtion);
-                TextView editTextKol = findViewById(R.id.editTextKol);
+                TextView editTextQuantity = findViewById(R.id.editTextQuantity);
                 TextView editTextPrice = findViewById(R.id.editTextPrice);
 
-                if (editTextName.getText().length() > 0) {
+                if (editTextName.getText().length() == 0 || editTextQuantity.getText().length() == 0 || editTextPrice.getText().length() == 0){
+                    Toast.makeText(getApplicationContext(), "! Не заполнены все поля товара !", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(AddElementActivity.this, MainActivity.class);
+                    intent.putExtra("name",         editTextName.getText().toString());
+                    intent.putExtra("quantity",     Integer.valueOf(editTextQuantity.getText().toString()));
+                    intent.putExtra("price",        Integer.valueOf(editTextPrice.getText().toString()));
+                    intent.putExtra("imgId",        R.mipmap.ic_launcher_round);
+                    startActivity(intent);
 
-     public Product(String editTextName.getText(), editTextDescriprtion.getText(), String(editTextKol.get)int quantity, int price, R.id.draw) {
-
-                    } else {
-                    Toast.makeText()
-                    Toast.makeText(getApplicationContext(), "! Не заполнено наименование товара !", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -41,4 +44,6 @@ public class AddElementActivity extends AppCompatActivity {
 
 
     }
+
+
 }
