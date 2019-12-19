@@ -12,21 +12,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<Product> products;
 
-    private static final int REQUEST_CODE_PERMISSION_READ_STORAGE = 10;
+    public static final int REQUEST_CODE_PERMISSION_READ_STORAGE = 10;
+    public static final int REQUEST_CODE_PERMISSION_WRITE_STORAGE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +66,17 @@ public class MainActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                saveProducts(fileContent(products));
             }
         });
 
-
-
-
+        Button buttonRead = findViewById(R.id.buttonRead);
+        buttonRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadItems();
+            }
+        });
 
     }
 
@@ -77,28 +85,96 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ArrayList<Product> loading() {
-        ArrayList<Product> products = new ArrayList<Product>();
-        products.add(new Product(1,2, "Танчик", R.drawable.tank));
-        products.add(new Product(10,20, "Автомобильчик", R.drawable.am200));
-        products.add(new Product(15,30, "Мотик", R.drawable.moto200));
-        products.add(new Product(1,25, "Самолётик", R.drawable.flight200));
-        products.add(new Product(90,40, "Вертолётик", R.drawable.helicopter200));
-        products.add(new Product(3500,1, "Чувиха", R.drawable.girl01));
-        products.add(new Product(5000,1, "Другая Чувиха", R.drawable.blondinka200));
-        products.add(new Product(1500,1, "Чувиха не дорого", R.drawable.a3));
-        products.add(new Product(6750,1, "Дорогая чувиха", R.drawable.a4));
-        products.add(new Product(19990,0, "Всем чувихам Чувиха", R.drawable.chuvixa200));
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("Танчик", 2,1, R.drawable.tank));
+        products.add(new Product("Автомобильчик", 10,20, R.drawable.am200));
+        products.add(new Product("Мотик", 15,30, R.drawable.moto200));
+        products.add(new Product("Самолётик", 1,25, R.drawable.flight200));
+        products.add(new Product("Вертолётик", 90,40, R.drawable.helicopter200));
+        products.add(new Product("Чувиха", 3500,1, R.drawable.girl01));
+        products.add(new Product("Другая Чувиха", 5000,1, R.drawable.blondinka200));
+        products.add(new Product("Чувиха не дорого", 1500,1, R.drawable.a3));
+        products.add(new Product("Дорогая чувиха", 6750,1, R.drawable.a4));
+        products.add(new Product("Всем чувихам Чувиха",19990,0,  R.drawable.chuvixa200));
         Bundle arguments =  getIntent().getExtras();
         if(arguments != null){
             String name = arguments.getString("name");
             int quantity = arguments.getInt("quantity");
             int price = arguments.getInt("price");
             int imgId = arguments.getInt("imgId");
-            Toast.makeText(this,  name + " " + quantity + " " + price, Toast.LENGTH_SHORT).show();
-            products.add(new Product(price, quantity, name, imgId));
+            Toast.makeText(this,  name + " " + price + " " + quantity, Toast.LENGTH_SHORT).show();
+            products.add(new Product(name, price, quantity, imgId));
         }
         return products;
     }
+
+
+    private ArrayList<Product> loadItems() {
+        Log.i("BufferedReader", "loadItems");
+
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            File productsFile = new File(getApplicationContext().getExternalFilesDir(null),"products.txt");
+            FileReader fileReader = new FileReader(productsFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String lineOfFile = bufferedReader.readLine();
+            while (lineOfFile!= null) {
+                String[] p = lineOfFile.split(";");
+                Log.i("BufferedReader", p[0] + " " + p[1] + " " + p[2] + " " + p[3]);
+                Toast.makeText(this, p[0] + " " + p[1] + " " + p[2] + " " + p[3], Toast.LENGTH_LONG).show();
+                lineOfFile = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("BufferedReader", e.toString());
+            Toast.makeText(this, "e.toString() = " + e.toString(), Toast.LENGTH_LONG).show();
+        }
+        return products;
+    }
+
+
+
+    private void saveProducts(String fileContent) {
+        if (isExternalStorageWritable()) {
+            Toast.makeText(this, "getExternalFilesDir = " + getApplicationContext().getExternalFilesDir(null).toString(), Toast.LENGTH_LONG).show();
+            Log.i("BufferedReader", "getExternalFilesDir = " + getApplicationContext().getExternalFilesDir(null).toString());
+
+            File productsFile = new File(getApplicationContext().getExternalFilesDir(null),"products.txt");
+            Toast.makeText(this, "AbsolutePath = " + productsFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            Log.i("BufferedReader", "AbsolutePath = " + productsFile.getAbsolutePath());
+            try {
+                FileWriter logWriter = new FileWriter(productsFile);
+                logWriter.append(fileContent);
+                logWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.i("BufferedReader", e.toString());
+            }
+        } else {
+            Toast.makeText(this, "File Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private String fileContent(ArrayList<Product> products) {
+        String fileContent = "";
+        for (Product item: products) {
+            fileContent = fileContent + item.getName()  + ";" + item.getPrice()  + ";" + item.getQuantity() + ";" + item.getImage() + ";" + item.getChecked()  + "\n";
+        }
+        return fileContent;
+    }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -114,6 +190,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
     }
+
+
+
+
+
+
+
 
 
 

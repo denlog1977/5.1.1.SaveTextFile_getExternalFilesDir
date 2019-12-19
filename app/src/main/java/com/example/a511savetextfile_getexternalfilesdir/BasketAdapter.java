@@ -50,13 +50,6 @@ public class BasketAdapter extends BaseAdapter {
         return position;
     }
 
-//    private CompoundButton.OnCheckedChangeListener myCheckChangeList
-//            = new CompoundButton.OnCheckedChangeListener() {
-//        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//            goods.get((Integer) buttonView.getTag()).setChecked(isChecked);
-//        }
-//    };
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -87,7 +80,7 @@ public class BasketAdapter extends BaseAdapter {
             }
         });
         chekBox.setTag(position);
-        chekBox.setChecked(product.isChecked());
+        chekBox.setChecked(product.getChecked());
 
         Button buttonRemove = (Button) (view.findViewById(R.id.buttonRemove));
         buttonRemove.setOnClickListener(new View.OnClickListener() {

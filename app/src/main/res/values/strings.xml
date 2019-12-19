@@ -8,5 +8,6 @@
     <string name="Quantity">Количество</string>
     <string name="Price">Цена</string>
     <string name="ButtonOK">ОК</string>
+    <string name="readFile">Прочитать файл</string>
 
 </resources>

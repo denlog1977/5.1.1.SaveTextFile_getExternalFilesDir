@@ -31,11 +31,10 @@ public class AddElementActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(AddElementActivity.this, MainActivity.class);
                     intent.putExtra("name",         editTextName.getText().toString());
-                    intent.putExtra("quantity",     Integer.valueOf(editTextQuantity.getText().toString()));
                     intent.putExtra("price",        Integer.valueOf(editTextPrice.getText().toString()));
+                    intent.putExtra("quantity",     Integer.valueOf(editTextQuantity.getText().toString()));
                     intent.putExtra("imgId",        R.mipmap.ic_launcher_round);
                     startActivity(intent);
-
                 }
 
             }
