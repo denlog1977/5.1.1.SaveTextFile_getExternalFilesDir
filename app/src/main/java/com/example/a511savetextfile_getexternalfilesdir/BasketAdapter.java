@@ -69,13 +69,10 @@ public class BasketAdapter extends BaseAdapter {
         ((TextView) (view.findViewById(R.id.quantity))).setText("Количество: " + Integer.toString(product.getQuantity()) + " шт.");
 
         CheckBox chekBox = view.findViewById(R.id.selected);
-//        chekBox.setOnCheckedChangeListener(myCheckChangeList);
         chekBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(buttonView.getContext(), "OnCheckedChangeListener строка № " + Integer.toString(position + 1) + " isChecked=" + Boolean.toString(isChecked), Toast.LENGTH_SHORT).show();
-//                product = getProduct(position);
-//                product.setChecked(isChecked);
+//                Toast.makeText(buttonView.getContext(), "OnCheckedChangeListener строка № " + Integer.toString(position + 1) + " isChecked=" + Boolean.toString(isChecked), Toast.LENGTH_SHORT).show();
                 goods.get((Integer) buttonView.getTag()).setChecked(isChecked);
             }
         });
@@ -88,7 +85,7 @@ public class BasketAdapter extends BaseAdapter {
             public void onClick(View v) {
                 goods.remove(position);
                 notifyDataSetChanged();
-                Toast.makeText(v.getContext(), "Удаление позиции № " + Integer.toString(position + 1) + "\n\nОсталось строк: " + Integer.toString(goods.size()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Удаление позиции № " + Integer.toString(position + 1) + "\n\nОсталось строк: " + Integer.toString(goods.size()), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -120,7 +117,7 @@ public class BasketAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx, " view onClick Позиция № " + Integer.toString(position + 1), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ctx, " view onClick Позиция № " + Integer.toString(position + 1), Toast.LENGTH_SHORT).show();
             }
         });
 

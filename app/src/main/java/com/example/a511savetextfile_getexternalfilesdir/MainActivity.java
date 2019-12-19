@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             int quantity = arguments.getInt("quantity");
             int price = arguments.getInt("price");
             int imgId = arguments.getInt("imgId");
-            Toast.makeText(this,  name + " " + price + " " + quantity, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,  name + " " + price + " " + quantity, Toast.LENGTH_SHORT).show();
             products.add(new Product(name, price, quantity, imgId));
         }
         return products;
@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
             Log.i("BufferedReader", "getExternalFilesDir = " + getApplicationContext().getExternalFilesDir(null).toString());
 
             File productsFile = new File(getApplicationContext().getExternalFilesDir(null),"products.txt");
-            Toast.makeText(this, "AbsolutePath = " + productsFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
-            Log.i("BufferedReader", "AbsolutePath = " + productsFile.getAbsolutePath());
+            Toast.makeText(this, "AbsolutePath        = " + productsFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            Log.i("BufferedReader", "AbsolutePath        = " + productsFile.getAbsolutePath());
             try {
                 FileWriter logWriter = new FileWriter(productsFile);
                 logWriter.append(fileContent);
