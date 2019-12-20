@@ -26,23 +26,23 @@ public class AddElementActivity extends AppCompatActivity {
                 TextView editTextQuantity = findViewById(R.id.editTextQuantity);
                 TextView editTextPrice = findViewById(R.id.editTextPrice);
 
-                if (editTextName.getText().length() == 0 || editTextQuantity.getText().length() == 0 || editTextPrice.getText().length() == 0){
+                if (editTextName.getText().toString().isEmpty() || editTextQuantity.getText().toString().isEmpty() || editTextPrice.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "! Не заполнены все поля товара !", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(AddElementActivity.this, MainActivity.class);
+                    Intent intent = new Intent();
                     intent.putExtra("name",         editTextName.getText().toString());
                     intent.putExtra("price",        Integer.valueOf(editTextPrice.getText().toString()));
                     intent.putExtra("quantity",     Integer.valueOf(editTextQuantity.getText().toString()));
                     intent.putExtra("imgId",        R.mipmap.ic_launcher_round);
-                    startActivity(intent);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
 
             }
         });
 
-
-
     }
+
 
 
 }
